@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="finalProject"
+    targetNamespace="http://enterprise.netbeans.org/bpel/FinalProject/finalProject"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/FinalProject/finalProject"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:sxnmp="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/NMProperty" xmlns:ns0="http://xml.netbeans.org/schema/loginOutputModel" xmlns:ns1="http://xml.netbeans.org/schema/porductOutputModel">
+    <import namespace="http://j2ee.netbeans.org/wsdl/FinalProject/src/postmanWSDL" location="postmanWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/FinalProject/src/userLoginWSDL" location="userLoginWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://j2ee.netbeans.org/wsdl/FinalProject/src/postProductWSDL" location="postProductWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="PartnerLink2" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/userLoginWSDL" partnerLinkType="tns:RestOutboundWSDL" partnerRole="RestOutboundPortTypeRole"/>
+        <partnerLink name="PartnerLink3" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/postProductWSDL" partnerLinkType="tns:RestOutboundWSDL" partnerRole="RestOutboundPortTypeRole"/>
+        <partnerLink name="PartnerLink1" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/postmanWSDL" partnerLinkType="tns:RestInboundWSDL" myRole="RestInboundPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="PostmanWSDLOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/postmanWSDL" messageType="tns:PostmanWSDLResponse"/>
+        <variable name="PostProductOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/postProductWSDL" messageType="tns:PostProductResponse"/>
+        <variable name="PostProductIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/postProductWSDL" messageType="tns:PostProductRequest">
+            <sxed:editor>
+                <sxed:nmProperties>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.params.name" displayName="name" source="to"/>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.params.description" displayName="description" source="to"/>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.params.price" displayName="price" source="to"/>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.headers.Authorization" displayName="Authorization" source="to"/>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.params.img_path" displayName="img_path" source="to"/>
+                </sxed:nmProperties>
+            </sxed:editor>
+        </variable>
+        <variable name="LoginOPOut" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/userLoginWSDL" messageType="tns:LoginOPResponse"/>
+        <variable name="LoginOPIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/userLoginWSDL" messageType="tns:LoginOPRequest">
+            <sxed:editor>
+                <sxed:nmProperties>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.params.username" displayName="username" source="to"/>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.params.password" displayName="password" source="to"/>
+                </sxed:nmProperties>
+            </sxed:editor>
+        </variable>
+        <variable name="PostmanWSDLIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/postmanWSDL" messageType="tns:PostmanWSDLRequest">
+            <sxed:editor>
+                <sxed:nmProperties>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.params.username" displayName="username" source="from"/>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.params.password" displayName="password" source="from"/>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.params.name" displayName="name" source="from"/>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.params.description" displayName="description" source="from"/>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.params.price" displayName="price" source="from"/>
+                    <sxed:nmProperty nmProperty="org.glassfish.openesb.rest.params.img_path" displayName="img_path" source="from"/>
+                </sxed:nmProperties>
+            </sxed:editor>
+        </variable>
+    </variables>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="PartnerLink1" operation="PostmanWSDL" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/postmanWSDL" portType="tns:RestInboundPortType" variable="PostmanWSDLIn"/>
+        <assign name="Assign1">
+            <copy>
+                <from variable="PostmanWSDLIn" sxnmp:nmProperty="org.glassfish.openesb.rest.params.username"/>
+                <to variable="LoginOPIn" sxnmp:nmProperty="org.glassfish.openesb.rest.params.username"/>
+            </copy>
+            <copy>
+                <from variable="PostmanWSDLIn" sxnmp:nmProperty="org.glassfish.openesb.rest.params.password"/>
+                <to variable="LoginOPIn" sxnmp:nmProperty="org.glassfish.openesb.rest.params.password"/>
+            </copy>
+            <copy>
+                <from>'Dummy'</from>
+                <to variable="LoginOPIn" part="part1"/>
+            </copy>
+        </assign>
+        <invoke name="Invoke1" partnerLink="PartnerLink2" operation="LoginOP" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/userLoginWSDL" portType="tns:RestOutboundPortType" inputVariable="LoginOPIn" outputVariable="LoginOPOut"/>
+        <assign name="Assign2">
+            <copy>
+                <from variable="PostmanWSDLIn" sxnmp:nmProperty="org.glassfish.openesb.rest.params.name"/>
+                <to variable="PostProductIn" sxnmp:nmProperty="org.glassfish.openesb.rest.params.name"/>
+            </copy>
+            <copy>
+                <from variable="PostmanWSDLIn" sxnmp:nmProperty="org.glassfish.openesb.rest.params.description"/>
+                <to variable="PostProductIn" sxnmp:nmProperty="org.glassfish.openesb.rest.params.description"/>
+            </copy>
+            <copy>
+                <from variable="PostmanWSDLIn" sxnmp:nmProperty="org.glassfish.openesb.rest.params.price"/>
+                <to variable="PostProductIn" sxnmp:nmProperty="org.glassfish.openesb.rest.params.price"/>
+            </copy>
+            <copy>
+                <from>concat('Bearer ', $LoginOPOut.part1/ns0:access_token)</from>
+                <to variable="PostProductIn" sxnmp:nmProperty="org.glassfish.openesb.rest.headers.Authorization"/>
+            </copy>
+            <copy>
+                <from variable="PostmanWSDLIn" sxnmp:nmProperty="org.glassfish.openesb.rest.params.img_path"/>
+                <to variable="PostProductIn" sxnmp:nmProperty="org.glassfish.openesb.rest.params.img_path"/>
+            </copy>
+            <copy>
+                <from>'Dummy'</from>
+                <to variable="PostProductIn" part="part1"/>
+            </copy>
+        </assign>
+        <invoke name="Invoke2" partnerLink="PartnerLink3" operation="PostProduct" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/postProductWSDL" portType="tns:RestOutboundPortType" inputVariable="PostProductIn" outputVariable="PostProductOut"/>
+        <assign name="Assign3">
+            <copy>
+                <from>$PostProductOut.part1/ns1:img_path</from>
+                <to>$PostmanWSDLOut.part1/ns1:img_path</to>
+            </copy>
+            <copy>
+                <from>$PostProductOut.part1/ns1:id</from>
+                <to>$PostmanWSDLOut.part1/ns1:id</to>
+            </copy>
+            <copy>
+                <from>$PostProductOut.part1/ns1:description</from>
+                <to>$PostmanWSDLOut.part1/ns1:description</to>
+            </copy>
+            <copy>
+                <from>$PostProductOut.part1/ns1:seller_id</from>
+                <to>$PostmanWSDLOut.part1/ns1:seller_id</to>
+            </copy>
+            <copy>
+                <from>$PostProductOut.part1/ns1:name</from>
+                <to>$PostmanWSDLOut.part1/ns1:name</to>
+            </copy>
+            <copy>
+                <from>$PostProductOut.part1/ns1:price</from>
+                <to>$PostmanWSDLOut.part1/ns1:price</to>
+            </copy>
+        </assign>
+        <reply name="Reply1" partnerLink="PartnerLink1" operation="PostmanWSDL" xmlns:tns="http://j2ee.netbeans.org/wsdl/FinalProject/src/postmanWSDL" portType="tns:RestInboundPortType" variable="PostmanWSDLOut"/>
+    </sequence>
+</process>

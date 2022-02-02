@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns0="http://enterprise.netbeans.org/bpel/FinalProject/finalProject" xmlns:ns1="http://j2ee.netbeans.org/wsdl/FinalProject/src/userLoginWSDL" xmlns:ns2="http://j2ee.netbeans.org/wsdl/FinalProject/src/postProductWSDL" xmlns:ns3="http://j2ee.netbeans.org/wsdl/FinalProject/src/postmanWSDL" xmlns:ns4="http://www.sun.com/jbi/descriptor/service-unit" version="1.0">
+    <services binding-component="false">
+        <provides endpoint-name="RestInboundPortTypeRole_myRole" interface-name="ns3:RestInboundPortType" service-name="ns0:PartnerLink1">
+            <ns4:display-name>PartnerLink1</ns4:display-name>
+            <ns4:process-name>finalProject</ns4:process-name>
+            <ns4:file-path>finalProject.bpel</ns4:file-path>
+        </provides>
+        <consumes endpoint-name="RestOutboundPortTypeRole_partnerRole" interface-name="ns1:RestOutboundPortType" service-name="ns0:PartnerLink2">
+            <ns4:display-name>PartnerLink2</ns4:display-name>
+            <ns4:process-name>finalProject</ns4:process-name>
+            <ns4:file-path>finalProject.bpel</ns4:file-path>
+        </consumes>
+        <consumes endpoint-name="RestOutboundPortTypeRole_partnerRole" interface-name="ns2:RestOutboundPortType" service-name="ns0:PartnerLink3">
+            <ns4:display-name>PartnerLink3</ns4:display-name>
+            <ns4:process-name>finalProject</ns4:process-name>
+            <ns4:file-path>finalProject.bpel</ns4:file-path>
+        </consumes>
+    </services>
+</jbi>

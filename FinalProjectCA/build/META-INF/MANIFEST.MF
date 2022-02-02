@@ -1,0 +1,4 @@
+Bundle-Name: FinalProjectCA
+Bundle-SymbolicName: FinalProjectCA
+Bundle-ManifestVersion: 2
+Bundle-Version: 1.0.0
